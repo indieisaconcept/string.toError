@@ -1,0 +1,44 @@
+{
+  "name": "string.toerror",
+  "version": "1.0.0",
+  "description": "Convert a string to a valid Error instance",
+  "main": "index",
+  "config": {
+    "path_test": "./test",
+    "path_coverage": "./test/coverage"
+  },
+  "scripts": {
+    "clean": "rimraf $npm_package_config_path_coverage",
+    "test": "mocha $npm_package_config_path_test",
+    "lint": "eslint ./",
+    "pretest": "npm run clean && npm run lint",
+    "cover": "istanbul cover --dir $npm_package_config_path_coverage _mocha $npm_package_config_path_test",
+    "precover": "npm run clean",
+    "coveralls": "cat $npm_package_config_path_coverage/lcov.info | coveralls",
+    "precoveralls": "npm run cover"
+  },
+  "keywords": [
+    "Error",
+    "toString",
+    "toError",
+    "stderr"
+  ],
+  "author": "Jonathan Barnett <me@indieisaconcept.com> (http://indieisaconcept.com)",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/indieisaconcept/string.toError"
+  },
+  "license": {
+    "type": "MIT"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "coveralls": "^2.11.6",
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4",
+    "rimraf": "^2.5.0",
+    "sinon": "^1.17.2"
+  }
+}
