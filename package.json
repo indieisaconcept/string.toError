@@ -1,6 +1,6 @@
 {
   "name": "string.toerror",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert a string to a valid Error instance",
   "main": "index",
   "config": {

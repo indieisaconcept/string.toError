@@ -15,7 +15,7 @@ $ npm i --save string.toerror
 ## usage
 
 ```JavaScript
-var toError  = require('string.toerror'),
+var toError  = require('./'),
     errorStr = `
         /script.js:53
                 return foo;
@@ -26,7 +26,17 @@ var toError  = require('string.toerror'),
             at process.initializePayload (/script.js:154:25)
     `;
 
-toError(errorStr);
+console.log(toError(errorStr) instanceof Error);           // => true;
+console.log(toError(errorStr) instanceof ReferenceError);  // => true;
+
+console.log(toError(errorStr)); // => ReferenceError
+
+// {    [ReferenceError: foo is not defined]
+//      message: 'foo is not defined',
+//      stack  : `ReferenceError: foo is not defined
+//                    at self.initialize (/script.js:53:16)
+//                    at process.initializePayload (/script.js:154:25)`
+// }
 ```
 > Example usage of string.toError
 
@@ -53,4 +63,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- **1.0.1**
+    - Fixes parsing issue due to whitespace in error string
+    - Use util.inherits
 - **1.0.0** Initial public release

@@ -46,19 +46,73 @@ describe('string.toError()', function () {
         ).to.throw(/"undefined" supplied, "string" required/);
     });
 
-    it('returns a valid error', function () {
+    describe('returns valid error', function () {
 
-        var error = toError(errorString);
+        it('when string is not indented', function () {
+
+            var error = toError(errorString);
+
+            expect(
+                error.toString(),
+                'error.toString() is correct'
+            ).to.equal('ReferenceError: foo is not defined');
+
+            expect(
+                error.message,
+                'error message is correct'
+            ).to.equal('foo is not defined');
+
+        });
+
+        it('when string is indented', function () {
+
+            var errorString = [
+                    '   /script.js:53',
+                    '           return foo;',
+                    '                  ^',
+                    '   ',
+                    '   ReferenceError: foo is not defined',
+                    '       at self.initialize (/script.js:53:16)',
+                    '       at process.initializePayload (/script.js:154:25)'
+                ].join('\n'),
+                error = toError(errorString);
+
+            expect(
+                error.toString(),
+                'error.toString() is correct'
+            ).to.equal('ReferenceError: foo is not defined');
+
+            expect(
+                error.message,
+                'error message is correct'
+            ).to.equal('foo is not defined');
+
+        });
+
+    });
+
+    it('returns default Error if cannot determine error type & message', function () {
+
+        var errorString = [
+                '   /script.js:53',
+                '           return foo;',
+                '                  ^',
+                '   ',
+                '   foo is not defined',
+                '       at self.initialize (/script.js:53:16)',
+                '       at process.initializePayload (/script.js:154:25)'
+            ].join('\n'),
+            error = toError(errorString);
 
         expect(
             error.toString(),
             'error.toString() is correct'
-        ).to.equal('ReferenceError: foo is not defined');
+        ).to.equal('Error: Unknown');
 
         expect(
             error.message,
             'error message is correct'
-        ).to.equal('foo is not defined');
+        ).to.equal('Unknown');
 
     });
 
